@@ -140,7 +140,57 @@
             </div>
         </div>
     </div>
+let activeProjectCard = null;
 
+        function openProjectModal(title, description, specs, btnElement = null) {
+            activeProjectCard = btnElement ? btnElement.closest('.project-card') : null;
+
+            const modalTitle = document.getElementById('modal-title');
+            const modalDesc = document.getElementById('modal-desc');
+            const modalSpecs = document.getElementById('modal-specs');
+
+            modalTitle.innerHTML = title;
+            modalDesc.innerHTML = description;
+            modalSpecs.innerHTML = specs;
+            
+            const modal = document.getElementById('project-modal');
+            modal.classList.remove('hidden');
+            document.body.classList.add('modal-open');
+
+            // Apply editable status if Edit Mode is active
+            if (editModeActive) {
+                [modalTitle, modalDesc, modalSpecs].forEach(el => {
+                    el.setAttribute('contenteditable', 'true');
+                    el.classList.add('editable');
+                });
+            } else {
+                [modalTitle, modalDesc, modalSpecs].forEach(el => {
+                    el.removeAttribute('contenteditable');
+                });
+            }
+        }
+
+        function saveModalChanges() {
+            // Update the button's onclick attribute on the parent card if editing in Edit Mode
+            if (activeProjectCard && editModeActive) {
+                const title = document.getElementById('modal-title').innerText.replace(/'/g, "\\'");
+                const desc = document.getElementById('modal-desc').innerText.replace(/'/g, "\\'");
+                const specs = document.getElementById('modal-specs').innerText.replace(/'/g, "\\'");
+                
+                const btn = activeProjectCard.querySelector('button[onclick*="openProjectModal"]');
+                if (btn) {
+                    btn.setAttribute('onclick', `openProjectModal('${title}', '${desc}', '${specs}', this)`);
+                }
+                saveAllChanges();
+            }
+            closeModal();
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('project-modal');
+            modal.classList.add('hidden');
+            document.body.classList.remove('modal-open');
+        }
     <!-- Navigation Header -->
     <header class="sticky top-0 z-40 w-full glass-card border-b border-slate-800 backdrop-blur-md">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
