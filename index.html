@@ -991,17 +991,33 @@ let activeProjectCard = null;
             showToast('Competency Added', 'Click text fields to edit inline.');
         }
 
-        function editProjectImage(btn) {
-            const card = btn.closest('.project-card');
-            const img = card.querySelector('.project-img');
-            const newUrl = prompt("Enter Image Web URL:", img ? img.src : "");
-            if (newUrl !== null) {
+function editProjectImage(btn) {
+    const card = btn.closest('.project-card');
+    const img = card.querySelector('.project-img');
+    
+    // Create a hidden temporary file picker input element
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = 'image/*';
+    
+    fileInput.onchange = e => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = event => {
                 if (img) {
-                    img.src = newUrl;
+                    img.src = event.target.result; // Saves image as base64 string
                     img.style.display = 'block';
                 }
-                showToast('Image Updated', 'Click Save to persist changes.');
-            }
+                saveAllChanges();
+                showToast('Image Loaded', 'Local image uploaded and saved successfully!');
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+    
+    fileInput.click(); // Triggers your PC's File Explorer window
+}
         }
 
         function addSkillCategory() {
