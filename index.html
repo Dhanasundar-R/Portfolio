@@ -990,7 +990,6 @@ let activeProjectCard = null;
             container.appendChild(newCard);
             showToast('Competency Added', 'Click text fields to edit inline.');
         }
-
 function editProjectImage(btn) {
     const card = btn.closest('.project-card');
     const img = card.querySelector('.project-img');
@@ -1013,8 +1012,7 @@ function editProjectImage(btn) {
                 showToast('Image Loaded', 'Local image uploaded and saved successfully!');
             };
             reader.readAsDataURL(file);
-        }
-    };
+        };
     
     fileInput.click(); // Triggers your PC's File Explorer windo
 
