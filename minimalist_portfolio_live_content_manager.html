@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth" data-theme="dark"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimalist Portfolio &amp; Content Manager</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-main);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 3px;
+        }
+
+        .admin-mode [contenteditable="true"] {
+            outline: 1px dashed var(--border-hover) !important;
+            outline-offset: 3px;
+            background-color: var(--edit-bg);
+            transition: outline 0.2s ease, background-color 0.2s ease;
+        }
+
+        :root, [data-theme="dark"] {
+            --bg-main: #0a0a0a;
+            --bg-card: #121212;
+            --bg-nav: rgba(10, 10, 10, 0.92);
+            --bg-subtle: #171717;
+            --bg-input: #000000;
+            --text-main: #ffffff;
+            --text-muted: #a3a3a3;
+            --text-dim: #737373;
+            --border-color: #262626;
+            --border-hover: #525252;
+            --edit-bg: rgba(255, 255, 255, 0.08);
+            --img-filter: grayscale(100%) contrast(125%);
+            --btn-main-bg: #ffffff;
+            --btn-main-text: #0a0a0a;
+            --badge-bg: #1a1a1a;
+            --badge-text: #e5e5e5;
+        }
+
+        [data-theme="light"] {
+            --bg-main: #ffffff;
+            --bg-card: #f5f5f5;
+            --bg-nav: rgba(255, 255, 255, 0.92);
+            --bg-subtle: #eaeaea;
+            --bg-input: #ffffff;
+            --text-main: #0a0a0a;
+            --text-muted: #404040;
+            --text-dim: #737373;
+            --border-color: #d4d4d4;
+            --border-hover: #737373;
+            --edit-bg: rgba(0, 0, 0, 0.08);
+            --img-filter: grayscale(100%) contrast(110%);
+            --btn-main-bg: #0a0a0a;
+            --btn-main-text: #ffffff;
+            --badge-bg: #e5e5e5;
+            --badge-text: #171717;
+        }
+
+        body {
+            background-color: var(--bg-main) !important;
+            color: var(--text-main) !important;
+            transition: background-color 0.25s ease, color 0.25s ease;
+        }
+
+        .theme-bg-main { background-color: var(--bg-main) !important; }
+        .theme-bg-card { background-color: var(--bg-card) !important; }
+        .theme-bg-nav { background-color: var(--bg-nav) !important; }
+        .theme-bg-subtle { background-color: var(--bg-subtle) !important; }
+        .theme-bg-input { background-color: var(--bg-input) !important; color: var(--text-main) !important; }
+        .theme-text-main { color: var(--text-main) !important; }
+        .theme-text-muted { color: var(--text-muted) !important; }
+        .theme-text-dim { color: var(--text-dim) !important; }
+        .theme-border { border-color: var(--border-color) !important; }
+        .theme-btn-primary { background-color: var(--btn-main-bg) !important; color: var(--btn-main-text) !important; }
+        .theme-badge { background-color: var(--badge-bg) !important; color: var(--badge-text) !important; }
+        .theme-img-filter { filter: var(--img-filter); }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:Inter, sans-serif;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:JetBrains Mono, monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.inset-0{inset:0px}.top-0{top:0px}.-left-\[31px\]{left:-31px}.top-1\.5{top:0.375rem}.right-0{right:0px}.right-4{right:1rem}.top-4{top:1rem}.right-2{right:0.5rem}.top-2{top:0.5rem}.z-40{z-index:40}.z-50{z-index:50}.z-10{z-index:10}.mx-4{margin-left:1rem;margin-right:1rem}.mx-auto{margin-left:auto;margin-right:auto}.my-8{margin-top:2rem;margin-bottom:2rem}.my-auto{margin-top:auto;margin-bottom:auto}.mb-1{margin-bottom:0.25rem}.mb-3{margin-bottom:0.75rem}.mb-4{margin-bottom:1rem}.mt-1{margin-top:0.25rem}.mt-12{margin-top:3rem}.ml-1\.5{margin-left:0.375rem}.line-clamp-3{overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3}.block{display:block}.inline-block{display:inline-block}.flex{display:flex}.grid{display:grid}.hidden{display:none}.aspect-\[4\/5\]{aspect-ratio:4/5}.aspect-video{aspect-ratio:16 / 9}.h-12{height:3rem}.h-9{height:2.25rem}.h-full{height:100%}.h-2\.5{height:0.625rem}.h-7{height:1.75rem}.max-h-\[70vh\]{max-height:70vh}.min-h-\[calc\(100vh-73px\)\]{min-height:calc(100vh - 73px)}.min-h-screen{min-height:100vh}.w-12{width:3rem}.w-4{width:1rem}.w-9{width:2.25rem}.w-full{width:100%}.w-2\.5{width:0.625rem}.w-7{width:1.75rem}.max-w-2xl{max-width:42rem}.max-w-3xl{max-width:48rem}.max-w-7xl{max-width:80rem}.max-w-md{max-width:28rem}.max-w-sm{max-width:24rem}.max-w-xs{max-width:20rem}@keyframes bounce{0%, 100%{transform:translateY(-25%);animation-timing-function:cubic-bezier(0.8,0,1,1)}50%{transform:none;animation-timing-function:cubic-bezier(0,0,0.2,1)}}.animate-bounce{animation:bounce 1s infinite}.cursor-pointer{cursor:pointer}.resize-none{resize:none}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-end{justify-content:flex-end}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1{gap:0.25rem}.gap-12{gap:3rem}.gap-2{gap:0.5rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.gap-8{gap:2rem}.gap-1\.5{gap:0.375rem}.space-x-2 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.5rem * var(--tw-space-x-reverse));margin-left:calc(0.5rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-3 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.75rem * var(--tw-space-x-reverse));margin-left:calc(0.75rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-6 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(1.5rem * var(--tw-space-x-reverse));margin-left:calc(1.5rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-8 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(2rem * var(--tw-space-x-reverse));margin-left:calc(2rem * calc(1 - var(--tw-space-x-reverse)))}.space-y-1 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.25rem * var(--tw-space-y-reverse))}.space-y-16 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(4rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(4rem * var(--tw-space-y-reverse))}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.space-y-24 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(6rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(6rem * var(--tw-space-y-reverse))}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.space-y-6 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem * var(--tw-space-y-reverse))}.space-y-8 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(2rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(2rem * var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.overflow-y-auto{overflow-y:auto}.scroll-smooth{scroll-behavior:smooth}.rounded{border-radius:0.25rem}.rounded-2xl{border-radius:1rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-xl{border-radius:0.75rem}.rounded-md{border-radius:0.375rem}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-l{border-left-width:1px}.border-t{border-top-width:1px}.border-dashed{border-style:dashed}.border-emerald-800{--tw-border-opacity:1;border-color:rgb(6 95 70 / var(--tw-border-opacity, 1))}.border-white\/30{border-color:rgb(255 255 255 / 0.3)}.bg-black\/70{background-color:rgb(0 0 0 / 0.7)}.bg-black\/80{background-color:rgb(0 0 0 / 0.8)}.bg-emerald-950\/40{background-color:rgb(2 44 34 / 0.4)}.bg-white\/20{background-color:rgb(255 255 255 / 0.2)}.object-cover{object-fit:cover}.p-2{padding:0.5rem}.p-4{padding:1rem}.p-6{padding:1.5rem}.p-0\.5{padding:0.125rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-3\.5{padding-left:0.875rem;padding-right:0.875rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-6{padding-top:1.5rem;padding-bottom:1.5rem}.py-8{padding-top:2rem;padding-bottom:2rem}.py-0\.5{padding-top:0.125rem;padding-bottom:0.125rem}.pb-2{padding-bottom:0.5rem}.pb-4{padding-bottom:1rem}.pl-6{padding-left:1.5rem}.pt-2{padding-top:0.5rem}.pt-4{padding-top:1rem}.pt-6{padding-top:1.5rem}.pt-8{padding-top:2rem}.pt-1{padding-top:0.25rem}.text-center{text-align:center}.font-mono{font-family:JetBrains Mono, monospace}.font-sans{font-family:Inter, sans-serif}.text-2xl{font-size:1.5rem;line-height:2rem}.text-4xl{font-size:2.25rem;line-height:2.5rem}.text-\[10px\]{font-size:10px}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.text-base{font-size:1rem;line-height:1.5rem}.font-bold{font-weight:700}.font-light{font-weight:300}.font-medium{font-weight:500}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.leading-relaxed{line-height:1.625}.leading-tight{line-height:1.25}.tracking-tight{letter-spacing:-0.025em}.tracking-wide{letter-spacing:0.025em}.tracking-wider{letter-spacing:0.05em}.tracking-widest{letter-spacing:0.1em}.text-amber-500{--tw-text-opacity:1;color:rgb(245 158 11 / var(--tw-text-opacity, 1))}.text-emerald-400{--tw-text-opacity:1;color:rgb(52 211 153 / var(--tw-text-opacity, 1))}.text-emerald-500{--tw-text-opacity:1;color:rgb(16 185 129 / var(--tw-text-opacity, 1))}.text-neutral-400{--tw-text-opacity:1;color:rgb(163 163 163 / var(--tw-text-opacity, 1))}.text-red-500{--tw-text-opacity:1;color:rgb(239 68 68 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-red-400{--tw-text-opacity:1;color:rgb(248 113 113 / var(--tw-text-opacity, 1))}.opacity-0{opacity:0}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-sm{--tw-backdrop-blur:blur(4px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-colors{transition-property:color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-opacity{transition-property:opacity;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-transform{transition-property:transform;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-500{transition-duration:500ms}.selection\:bg-neutral-800 *::selection{--tw-bg-opacity:1;background-color:rgb(38 38 38 / var(--tw-bg-opacity, 1))}.selection\:text-white *::selection{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.selection\:bg-neutral-800::selection{--tw-bg-opacity:1;background-color:rgb(38 38 38 / var(--tw-bg-opacity, 1))}.selection\:text-white::selection{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.hover\:border-neutral-500:hover{--tw-border-opacity:1;border-color:rgb(115 115 115 / var(--tw-border-opacity, 1))}.hover\:bg-white\/30:hover{background-color:rgb(255 255 255 / 0.3)}.hover\:bg-red-600:hover{--tw-bg-opacity:1;background-color:rgb(220 38 38 / var(--tw-bg-opacity, 1))}.hover\:text-red-400:hover{--tw-text-opacity:1;color:rgb(248 113 113 / var(--tw-text-opacity, 1))}.hover\:text-red-500:hover{--tw-text-opacity:1;color:rgb(239 68 68 / var(--tw-text-opacity, 1))}.hover\:opacity-100:hover{opacity:1}.hover\:opacity-80:hover{opacity:0.8}.hover\:opacity-90:hover{opacity:0.9}.focus\:border-neutral-500:focus{--tw-border-opacity:1;border-color:rgb(115 115 115 / var(--tw-border-opacity, 1))}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.group:hover .group-hover\:scale-105{--tw-scale-x:1.05;--tw-scale-y:1.05;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@media (min-width: 640px){.sm\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.sm\:flex-row{flex-direction:row}.sm\:space-x-4 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(1rem * var(--tw-space-x-reverse));margin-left:calc(1rem * calc(1 - var(--tw-space-x-reverse)))}.sm\:p-8{padding:2rem}.sm\:text-3xl{font-size:1.875rem;line-height:2.25rem}.sm\:text-6xl{font-size:3.75rem;line-height:1}.sm\:text-xl{font-size:1.25rem;line-height:1.75rem}}@media (min-width: 768px){.md\:flex{display:flex}.md\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.md\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}}@media (min-width: 1024px){.lg\:col-span-2{grid-column:span 2 / span 2}.lg\:col-span-5{grid-column:span 5 / span 5}.lg\:col-span-7{grid-column:span 7 / span 7}.lg\:grid-cols-12{grid-template-columns:repeat(12, minmax(0, 1fr))}.lg\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.lg\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.lg\:justify-end{justify-content:flex-end}.lg\:gap-12{gap:3rem}.lg\:px-12{padding-left:3rem;padding-right:3rem}.lg\:text-7xl{font-size:4.5rem;line-height:1}}</style></head>
+<body class="font-sans selection:bg-neutral-800 selection:text-white min-h-screen flex flex-col justify-between admin-mode">
+
+    <!-- TOP NAVIGATION BAR -->
+    <header class="sticky top-0 z-40 backdrop-blur-md border-b theme-border theme-bg-nav px-4 lg:px-12 py-4 transition-colors">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <a href="#hero" class="text-xl font-bold tracking-tight font-mono theme-text-main hover:opacity-80 transition-opacity">
+                <span id="nav-brand-name" class="editable" data-key="brandName">ALEX.DEV</span>
+            </a>
+
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium">
+                <a href="#hero" class="theme-text-muted hover:theme-text-main transition-colors">About</a>
+                <a href="#expertise" class="theme-text-muted hover:theme-text-main transition-colors">Expertise</a>
+                <a href="#experience" class="theme-text-muted hover:theme-text-main transition-colors">Experience</a>
+                <a href="#projects" class="theme-text-muted hover:theme-text-main transition-colors">Projects</a>
+                <a href="#contact" class="theme-text-muted hover:theme-text-main transition-colors">Direct Message</a>
+            </nav>
+
+            <div class="flex items-center space-x-3 sm:space-x-4">
+                <button id="theme-toggle-btn" onclick="toggleTheme()" class="flex items-center justify-center w-9 h-9 rounded-lg border theme-border theme-bg-card hover:border-neutral-500 transition-all" title="Toggle Light/Dark Theme">
+                    <i id="theme-icon" class="fa-solid fa-sun theme-text-main text-sm"></i>
+                </button>
+
+                <div id="save-status-indicator" class="items-center space-x-2 text-xs font-mono text-emerald-400 bg-emerald-950/40 border border-emerald-800 px-3 py-1 rounded-full hidden">
+                    <i class="fa-solid fa-check"></i>
+                    <span>Saved</span>
+                </div>
+                
+                <button id="admin-toggle-btn" onclick="toggleAdminModal()" class="flex items-center space-x-2 border theme-border theme-bg-card hover:border-neutral-500 text-xs font-mono px-3.5 py-2 rounded-lg transition-all">
+                    <i id="admin-icon" class="fa-solid fa-lock-open text-emerald-400"></i>
+                    <span id="admin-btn-text" class="theme-text-main">Owner Logged In (Exit)</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ADMIN LOGIN MODAL -->
+    <div id="login-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm hidden">
+        <div class="theme-bg-card border theme-border rounded-xl p-6 w-full max-w-sm mx-4 shadow-2xl">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="font-mono text-lg font-bold tracking-wide theme-text-main">Owner Authentication</h3>
+                <button onclick="closeAdminModal()" class="theme-text-muted hover:theme-text-main">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <p class="text-xs theme-text-muted mb-4">Enter PIN code to unlock live content editing. (Default PIN: <span class="font-mono theme-text-main font-bold">1234</span>)</p>
+            <form onsubmit="handleAdminAuth(event)">
+                <input type="password" id="admin-pin-input" placeholder="Enter PIN code" class="w-full theme-bg-input border theme-border rounded-lg px-4 py-2.5 text-sm theme-text-main focus:outline-none focus:border-neutral-500 font-mono mb-4">
+                <div id="pin-error" class="text-red-500 text-xs mb-3 hidden">Incorrect PIN code!</div>
+                <div class="flex justify-end space-x-3">
+                    <button type="button" onclick="closeAdminModal()" class="px-4 py-2 text-xs font-mono theme-text-muted hover:theme-text-main">Cancel</button>
+                    <button type="submit" class="px-4 py-2 theme-btn-primary text-xs font-mono font-bold rounded-lg hover:opacity-90 transition-colors">Authenticate</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MAIN CONTAINER -->
+    <main class="max-w-7xl mx-auto px-4 lg:px-12 w-full space-y-24">
+
+        <!-- 1. HERO / INTRO SECTION (FULLSCREEN VIEWPORT) -->
+        <section id="hero" class="min-h-[calc(100vh-73px)] flex flex-col justify-between py-8 border-b theme-border relative">
+            <div class="my-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                <!-- Hero Left: Text Content -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="inline-block px-3 py-1 theme-bg-subtle border theme-border rounded-full text-xs font-mono theme-text-muted tracking-wider uppercase">
+                        <span id="hero-status" class="editable" data-key="heroStatus">Available for Select Projects</span>
+                    </div>
+                    <h1 class="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight theme-text-main leading-tight">
+                        <span id="hero-title" class="editable" data-key="heroTitle">Architecting Clean &amp; Scalable Software Solutions</span>
+                    </h1>
+                    <p class="text-lg sm:text-xl theme-text-muted max-w-2xl font-light leading-relaxed">
+                        <span id="hero-bio" class="editable" data-key="heroBio">Full-Stack Engineer specialized in high-performance web systems, reactive user interfaces, and minimalist software design principles.</span>
+                    </p>
+                    
+                    <div class="pt-4 flex flex-wrap gap-4">
+                        <a href="#expertise" class="px-6 py-3 theme-btn-primary font-mono text-sm font-semibold rounded-lg hover:opacity-90 transition-all flex items-center gap-2 shadow-md">
+                            <span>Key Skills</span>
+                            <i class="fa-solid fa-arrow-down text-xs"></i>
+                        </a>
+                        <a href="#projects" class="px-6 py-3 border theme-border theme-bg-card hover:border-neutral-500 theme-text-main font-mono text-sm font-medium rounded-lg transition-all flex items-center gap-2">
+                            <span>View Work</span>
+                            <i class="fa-solid fa-code text-xs"></i>
+                        </a>
+                        <a href="#contact" class="px-6 py-3 border theme-border theme-bg-card hover:border-neutral-500 theme-text-main font-mono text-sm font-medium rounded-lg transition-all flex items-center gap-2">
+                            <span>Send Message</span>
+                            <i class="fa-solid fa-paper-plane text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Hero Right: Large Profile Photo -->
+                <div class="lg:col-span-5 flex justify-center lg:justify-end">
+                    <div class="relative w-full max-w-md aspect-[4/5] rounded-2xl overflow-hidden border theme-border theme-bg-subtle group shadow-2xl">
+                        <img id="hero-photo" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Profile" class="w-full h-full object-cover theme-img-filter group-hover:scale-105 transition-transform duration-500">
+                        
+                        <!-- Admin Photo Change Options -->
+                        <div id="change-photo-btn" class="admin-only absolute inset-0 bg-black/70 backdrop-blur-sm flex flex-col items-center justify-center space-y-3 opacity-0 hover:opacity-100 transition-opacity p-4">
+                            <span class="text-xs font-mono text-white font-medium">Update Hero Profile Photo:</span>
+                            <button onclick="promptChangePhotoUrl()" class="px-3 py-1.5 bg-white/20 hover:bg-white/30 text-white rounded text-xs font-mono border border-white/30 w-full max-w-xs flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-link"></i> Paste Image URL
+                            </button>
+                            <label class="px-3 py-1.5 bg-white/20 hover:bg-white/30 text-white rounded text-xs font-mono border border-white/30 w-full max-w-xs flex items-center justify-center gap-2 cursor-pointer">
+                                <i class="fa-solid fa-upload"></i> Upload From Device
+                                <input type="file" accept="image/*" class="hidden" onchange="uploadHeroPhoto(event)">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scroll Indicator -->
+            <div class="pt-6 pb-2 text-center flex flex-col items-center justify-center space-y-2 theme-text-dim font-mono text-xs">
+                <span>SCROLL TO KEY SKILLS</span>
+                <i class="fa-solid fa-chevron-down animate-bounce theme-text-muted"></i>
+            </div>
+        </section>
+
+        <!-- 2. KEY SKILLS & EXPERTISE SECTION -->
+        <section id="expertise" class="space-y-8 pt-8">
+            <div class="flex items-center justify-between border-b theme-border pb-4">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-bold tracking-tight theme-text-main">Key Skills &amp; Expertise</h2>
+                    <p class="text-xs font-mono theme-text-dim mt-1">// TECHNICAL CAPABILITIES &amp; CORE COMPETENCIES</p>
+                </div>
+                <button onclick="addExpertiseCategory()" class="admin-only px-3 py-1.5 border border-dashed theme-border theme-bg-card hover:border-neutral-500 theme-text-main text-xs font-mono rounded-lg transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>Add Skill Category</span>
+                </button>
+            </div>
+
+            <div id="expertise-container" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="theme-bg-card border theme-border rounded-xl p-6 space-y-4 relative group">
+                    
+                        <button onclick="deleteExpertise(1)" class="absolute top-4 right-4 theme-text-dim hover:text-red-400 text-xs transition-colors">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    
+                    <h3 class="text-base font-bold font-mono theme-text-main editable-field" onblur="updateExpertise(1, 'category', this.textContent)" contenteditable="true">Frontend Engineering</h3>
+                    <p class="text-xs theme-text-muted font-mono leading-relaxed editable-field" onblur="updateExpertise(1, 'skills', this.textContent)" contenteditable="true">React, Next.js, TypeScript, Tailwind CSS, Web Performance</p>
+                </div>
+            
+                <div class="theme-bg-card border theme-border rounded-xl p-6 space-y-4 relative group">
+                    
+                        <button onclick="deleteExpertise(2)" class="absolute top-4 right-4 theme-text-dim hover:text-red-400 text-xs transition-colors">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    
+                    <h3 class="text-base font-bold font-mono theme-text-main editable-field" onblur="updateExpertise(2, 'category', this.textContent)" contenteditable="true">Backend &amp; Cloud</h3>
+                    <p class="text-xs theme-text-muted font-mono leading-relaxed editable-field" onblur="updateExpertise(2, 'skills', this.textContent)" contenteditable="true">Node.js, Python, PostgreSQL, REST APIs, GraphQL, Docker, AWS</p>
+                </div>
+            
+                <div class="theme-bg-card border theme-border rounded-xl p-6 space-y-4 relative group">
+                    
+                        <button onclick="deleteExpertise(3)" class="absolute top-4 right-4 theme-text-dim hover:text-red-400 text-xs transition-colors">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    
+                    <h3 class="text-base font-bold font-mono theme-text-main editable-field" onblur="updateExpertise(3, 'category', this.textContent)" contenteditable="true">System Architecture</h3>
+                    <p class="text-xs theme-text-muted font-mono leading-relaxed editable-field" onblur="updateExpertise(3, 'skills', this.textContent)" contenteditable="true">Clean Code, CI/CD Pipelines, Test Automation, Security Audit</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. EDUCATION & WORK EXPERIENCE SECTION -->
+        <section id="experience" class="space-y-8">
+            <div class="flex items-center justify-between border-b theme-border pb-4">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-bold tracking-tight theme-text-main">Experience &amp; Education</h2>
+                    <p class="text-xs font-mono theme-text-dim mt-1">// CAREER CHRONOLOGY &amp; DEGREES</p>
+                </div>
+                <button onclick="addExperienceEntry()" class="admin-only px-3 py-1.5 border border-dashed theme-border theme-bg-card hover:border-neutral-500 theme-text-main text-xs font-mono rounded-lg transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>Add Experience</span>
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div class="space-y-6">
+                    <h3 class="text-sm font-mono theme-text-muted uppercase tracking-widest flex items-center gap-2">
+                        <i class="fa-solid fa-briefcase"></i> Work History
+                    </h3>
+                    <div id="work-timeline" class="space-y-6 border-l theme-border pl-6 relative">
+                <div class="space-y-2 relative group">
+                    <div class="absolute -left-[31px] top-1.5 w-2.5 h-2.5 rounded-full theme-bg-main border theme-border"></div>
+                    
+                        <button onclick="deleteExperience(1)" class="absolute right-0 top-0 theme-text-dim hover:text-red-400 text-xs transition-colors">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                        <h4 class="text-base font-bold theme-text-main editable-field" onblur="updateExperience(1, 'title', this.textContent)" contenteditable="true">Senior Full-Stack Engineer</h4>
+                        <span class="text-xs font-mono theme-text-dim editable-field" onblur="updateExperience(1, 'period', this.textContent)" contenteditable="true">D- Present</span>
+                    </div>
+                    <div class="text-xs font-mono theme-text-muted editable-field" onblur="updateExperience(1, 'org', this.textContent)" contenteditable="true">Apex Technologies Inc.</div>
+                    <p class="text-xs theme-text-muted font-light leading-relaxed pt-1 editable-field" onblur="updateExperience(1, 'desc', this.textContent)" contenteditable="true">Lead backend infrastructure &amp; frontend architectural redesign resulting in 40% faster latency.</p>
+                </div>
+            
+                <div class="space-y-2 relative group">
+                    <div class="absolute -left-[31px] top-1.5 w-2.5 h-2.5 rounded-full theme-bg-main border theme-border"></div>
+                    
+                        <button onclick="deleteExperience(2)" class="absolute right-0 top-0 theme-text-dim hover:text-red-400 text-xs transition-colors">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                        <h4 class="text-base font-bold theme-text-main editable-field" onblur="updateExperience(2, 'title', this.textContent)" contenteditable="true">Software Engineer</h4>
+                        <span class="text-xs font-mono theme-text-dim editable-field" onblur="updateExperience(2, 'period', this.textContent)" contenteditable="true">2021 - 2023</span>
+                    </div>
+                    <div class="text-xs font-mono theme-text-muted editable-field" onblur="updateExperience(2, 'org', this.textContent)" contenteditable="true">Nexus Cloud Systems</div>
+                    <p class="text-xs theme-text-muted font-light leading-relaxed pt-1 editable-field" onblur="updateExperience(2, 'desc', this.textContent)" contenteditable="true">Built scalable data pipelines and responsive dashboard interfaces.</p>
+                </div>
+            </div>
+                </div>
+
+                <div class="space-y-6">
+                    <h3 class="text-sm font-mono theme-text-muted uppercase tracking-widest flex items-center gap-2">
+                        <i class="fa-solid fa-graduation-cap"></i> Education &amp; Credentials
+                    </h3>
+                    <div id="education-timeline" class="space-y-6 border-l theme-border pl-6 relative">
+                <div class="space-y-2 relative group">
+                    <div class="absolute -left-[31px] top-1.5 w-2.5 h-2.5 rounded-full theme-bg-main border theme-border"></div>
+                    
+                        <button onclick="deleteExperience(3)" class="absolute right-0 top-0 theme-text-dim hover:text-red-400 text-xs transition-colors">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                        <h4 class="text-base font-bold theme-text-main editable-field" onblur="updateExperience(3, 'title', this.textContent)" contenteditable="true">B.S. in Computer Science</h4>
+                        <span class="text-xs font-mono theme-text-dim editable-field" onblur="updateExperience(3, 'period', this.textContent)" contenteditable="true">2017 - 2021</span>
+                    </div>
+                    <div class="text-xs font-mono theme-text-muted editable-field" onblur="updateExperience(3, 'org', this.textContent)" contenteditable="true">University of Tech &amp; Design</div>
+                    <p class="text-xs theme-text-muted font-light leading-relaxed pt-1 editable-field" onblur="updateExperience(3, 'desc', this.textContent)" contenteditable="true">Graduated with Honors. Focused on Distributed Systems and HCI.</p>
+                </div>
+            
+                <div class="space-y-2 relative group">
+                    <div class="absolute -left-[31px] top-1.5 w-2.5 h-2.5 rounded-full theme-bg-main border theme-border"></div>
+                    
+                        <button onclick="deleteExperience(4)" class="absolute right-0 top-0 theme-text-dim hover:text-red-400 text-xs transition-colors">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                        <h4 class="text-base font-bold theme-text-main editable-field" onblur="updateExperience(4, 'title', this.textContent)" contenteditable="true">AWS Certified Solutions Architect</h4>
+                        <span class="text-xs font-mono theme-text-dim editable-field" onblur="updateExperience(4, 'period', this.textContent)" contenteditable="true">2022</span>
+                    </div>
+                    <div class="text-xs font-mono theme-text-muted editable-field" onblur="updateExperience(4, 'org', this.textContent)" contenteditable="true">Amazon Web Services</div>
+                    <p class="text-xs theme-text-muted font-light leading-relaxed pt-1 editable-field" onblur="updateExperience(4, 'desc', this.textContent)" contenteditable="true">Enterprise cloud deployment best practices credential.</p>
+                </div>
+            </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. PROJECTS SECTION -->
+        <section id="projects" class="space-y-8">
+            <div class="flex items-center justify-between border-b theme-border pb-4">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-bold tracking-tight theme-text-main">Featured Projects</h2>
+                    <p class="text-xs font-mono theme-text-dim mt-1">// CLICK CARDS FOR COMPLETE SPECIFICATION</p>
+                </div>
+                <button onclick="addProjectCard()" class="admin-only px-3 py-1.5 border border-dashed theme-border theme-bg-card hover:border-neutral-500 theme-text-main text-xs font-mono rounded-lg transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>Add Project</span>
+                </button>
+            </div>
+
+            <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="theme-bg-card border theme-border rounded-xl p-6 flex flex-col justify-between space-y-4 hover:border-neutral-500 transition-all cursor-pointer group relative" onclick="openProjectModal(1)">
+                    
+                        <button onclick="event.stopPropagation(); deleteProject(1)" class="absolute top-4 right-4 theme-text-dim hover:text-red-400 text-xs transition-colors z-10">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-[10px] font-mono theme-badge uppercase tracking-widest border theme-border px-2 py-0.5 rounded editable-field" onclick="event.stopPropagation()" onblur="updateProjectField(1, 'category', this.textContent)" contenteditable="true">SaaS / Full Stack</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-xs theme-text-dim group-hover:theme-text-main transition-colors"></i>
+                        </div>
+                        <h3 class="text-lg font-bold theme-text-main editable-field" onclick="event.stopPropagation()" onblur="updateProjectField(1, 'title', this.textContent)" contenteditable="true">Synthetix Analytics Platform</h3>
+                        <p class="text-xs theme-text-muted font-light leading-relaxed line-clamp-3 editable-field" onclick="event.stopPropagation()" onblur="updateProjectField(1, 'summary', this.textContent)" contenteditable="true">Real-time stream telemetry visualization dashboard for microservice telemetry and network monitoring.</p>
+                    </div>
+
+                    <div class="pt-4 border-t theme-border flex flex-wrap gap-1.5">
+                        <span class="text-[10px] font-mono theme-badge px-2 py-0.5 rounded border theme-border">React</span><span class="text-[10px] font-mono theme-badge px-2 py-0.5 rounded border theme-border">TypeScript</span><span class="text-[10px] font-mono theme-badge px-2 py-0.5 rounded border theme-border">Node.js</span><span class="text-[10px] font-mono theme-badge px-2 py-0.5 rounded border theme-border">SDFSDFSD,EDS</span><span class="text-[10px] font-mono theme-badge px-2 py-0.5 rounded border theme-border">SDGSDGSD</span>
+                    </div>
+                </div>
+            
+                <div class="theme-bg-card border theme-border rounded-xl p-6 flex flex-col justify-between space-y-4 hover:border-neutral-500 transition-all cursor-pointer group relative" onclick="openProjectModal(2)">
+                    
+                        <button onclick="event.stopPropagation(); deleteProject(2)" class="absolute top-4 right-4 theme-text-dim hover:text-red-400 text-xs transition-colors z-10">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-[10px] font-mono theme-badge uppercase tracking-widest border theme-border px-2 py-0.5 rounded editable-field" onclick="event.stopPropagation()" onblur="updateProjectField(2, 'category', this.textContent)" contenteditable="true">Developer Tooling</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-xs theme-text-dim group-hover:theme-text-main transition-colors"></i>
+                        </div>
+                        <h3 class="text-lg font-bold theme-text-main editable-field" onclick="event.stopPropagation()" onblur="updateProjectField(2, 'title', this.textContent)" contenteditable="true">Krypton Minimalist CMS</h3>
+                        <p class="text-xs theme-text-muted font-light leading-relaxed line-clamp-3 editable-field" onclick="event.stopPropagation()" onblur="updateProjectField(2, 'summary', this.textContent)" contenteditable="true">An ultra-lightweight content editing framework stored client-side or static JSON.</p>
+                    </div>
+
+                    <div class="pt-4 border-t theme-border flex flex-wrap gap-1.5">
+                        <span class="text-[10px] font-mono theme-badge px-2 py-0.5 rounded border theme-border">JavaScript</span><span class="text-[10px] font-mono theme-badge px-2 py-0.5 rounded border theme-border">HTML5</span><span class="text-[10px] font-mono theme-badge px-2 py-0.5 rounded border theme-border">CSS3</span><span class="text-[10px] font-mono theme-badge px-2 py-0.5 rounded border theme-border">LocalStorage</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dynamic Custom Sections -->
+        <section id="custom-sections-wrapper" class="space-y-16"></section>
+
+        <div class="admin-only text-center py-6 border-t border-b border-dashed theme-border">
+            <button onclick="addCustomSection()" class="px-5 py-2.5 theme-bg-card border theme-border hover:border-neutral-500 theme-text-main text-xs font-mono rounded-lg transition-all flex items-center gap-2 mx-auto">
+                <i class="fa-solid fa-folder-plus"></i>
+                <span>Add Entirely New Section</span>
+            </button>
+        </div>
+
+        <!-- 5. DIRECT MESSAGE (DM) SECTION -->
+        <section id="contact" class="space-y-8 pt-8">
+            <div class="border-b theme-border pb-4">
+                <h2 class="text-2xl sm:text-3xl font-bold tracking-tight theme-text-main">Direct Message</h2>
+                <p class="text-xs font-mono theme-text-dim mt-1">// GET IN TOUCH OR START A CONVERSATION</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="space-y-6">
+                    <p class="theme-text-muted text-sm leading-relaxed">
+                        <span id="contact-intro" class="editable" data-key="contactIntro">Interested in collaboration, contract roles, or technical inquiries? Send a message directly using the terminal layout.</span>
+                    </p>
+
+                    <div class="space-y-4 font-mono text-xs">
+                        <div class="flex items-center space-x-3 theme-text-main">
+                            <i class="fa-regular fa-envelope theme-text-dim w-4"></i>
+                            <span id="contact-email" class="editable" data-key="contactEmail">alex.dev@domain.com</span>
+                        </div>
+                        <div class="flex items-center space-x-3 theme-text-main">
+                            <i class="fa-solid fa-location-dot theme-text-dim w-4"></i>
+                            <span id="contact-location" class="editable" data-key="contactLocation">San Francisco, CA / Remote</span>
+                        </div>
+                        <div class="flex items-center space-x-3 theme-text-main">
+                            <i class="fa-brands fa-github theme-text-dim w-4"></i>
+                            <span id="contact-github" class="editable" data-key="contactGithub">github.com/alex-dev</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-2 theme-bg-card border theme-border rounded-xl p-6 relative">
+                    <form id="dm-form" onsubmit="handleSendDM(event)" class="space-y-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-mono theme-text-muted mb-1">YOUR NAME *</label>
+                                <input type="text" required="" id="dm-name" placeholder="John Doe" class="w-full theme-bg-input border theme-border rounded-lg px-4 py-2.5 text-sm theme-text-main focus:outline-none focus:border-neutral-500 transition-colors">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-mono theme-text-muted mb-1">EMAIL ADDRESS *</label>
+                                <input type="email" required="" id="dm-email" placeholder="john@example.com" class="w-full theme-bg-input border theme-border rounded-lg px-4 py-2.5 text-sm theme-text-main focus:outline-none focus:border-neutral-500 transition-colors">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-mono theme-text-muted mb-1">SUBJECT</label>
+                            <input type="text" id="dm-subject" placeholder="Project Inquiry / Job Opportunity" class="w-full theme-bg-input border theme-border rounded-lg px-4 py-2.5 text-sm theme-text-main focus:outline-none focus:border-neutral-500 transition-colors">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-mono theme-text-muted mb-1">MESSAGE *</label>
+                            <textarea required="" id="dm-message" rows="5" placeholder="Type your message here..." class="w-full theme-bg-input border theme-border rounded-lg px-4 py-2.5 text-sm theme-text-main focus:outline-none focus:border-neutral-500 transition-colors resize-none"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full py-3 theme-btn-primary font-mono text-sm font-bold rounded-lg hover:opacity-90 transition-colors flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-paper-plane"></i>
+                            <span>Transmit Message</span>
+                        </button>
+                    </form>
+
+                    <div id="dm-success" class="hidden absolute inset-0 theme-bg-card border theme-border rounded-xl flex flex-col items-center justify-center text-center p-6 space-y-4">
+                        <div class="w-12 h-12 rounded-full border theme-border flex items-center justify-center theme-text-main text-xl">
+                            <i class="fa-solid fa-check"></i>
+                        </div>
+                        <h3 class="text-xl font-bold font-mono theme-text-main">Message Transmitted</h3>
+                        <p class="text-xs theme-text-muted max-w-md">Thank you for reaching out. Your direct message has been logged successfully into browser storage.</p>
+                        <button onclick="resetDMForm()" class="px-4 py-2 theme-bg-subtle border theme-border text-xs font-mono theme-text-main rounded-lg hover:border-neutral-500 transition-colors">Send Another</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="border-t theme-border py-8 px-4 lg:px-12 mt-12 theme-bg-main">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between text-xs font-mono theme-text-dim gap-4">
+            <div>
+                © <span id="footer-year">2026</span> <span id="footer-name" class="editable" data-key="footerName">Alex Dev</span>. All rights reserved.
+            </div>
+            <div class="flex space-x-6">
+                <span class="hover:theme-text-main transition-colors cursor-pointer">PRIVACY</span>
+                <span class="hover:theme-text-main transition-colors cursor-pointer">TERMS</span>
+                <span class="hover:theme-text-main transition-colors cursor-pointer">SECURITY</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- DETAILED PROJECT EXPLANATION POPUP MODAL -->
+    <div id="project-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 overflow-y-auto hidden">
+        <div class="theme-bg-card border theme-border rounded-2xl w-full max-w-3xl my-8 overflow-hidden shadow-2xl relative">
+            
+            <div class="p-6 border-b theme-border flex items-start justify-between theme-bg-subtle">
+                <div class="space-y-1">
+                    <span id="modal-project-tags" class="text-xs font-mono theme-text-muted uppercase tracking-widest block editable-field" contenteditable="true">SaaS / Full Stack</span>
+                    <h2 id="modal-project-title" class="text-2xl font-bold theme-text-main tracking-tight editable-field" contenteditable="true">Synthetix Analytics Platform</h2>
+                </div>
+                <button onclick="closeProjectModal()" class="theme-text-muted hover:theme-text-main p-2">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+
+            <div class="p-6 sm:p-8 space-y-6 max-h-[70vh] overflow-y-auto">
+                <div class="space-y-2">
+                    <h4 id="modal-overview-heading" class="text-xs font-mono theme-text-dim uppercase">System Overview</h4>
+                    <p id="modal-project-desc" class="text-sm theme-text-muted leading-relaxed font-light editable-field" contenteditable="true">Synthetix provides real-time distributed application performance metrics. It monitors WebSocket connection density, query performance, and CPU spikes in multi-tenant cloud deployments.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="theme-bg-input border theme-border p-4 rounded-lg space-y-2">
+                        <h5 class="text-xs font-mono theme-text-muted flex items-center gap-2">
+                            <i class="fa-solid fa-triangle-exclamation text-amber-500"></i> Problem Statement
+                        </h5>
+                        <p id="modal-project-problem" class="text-xs theme-text-main leading-relaxed editable-field" contenteditable="true">Enterprise operations lacked real-time microsecond visibility into high-frequency microservice transactions.</p>
+                    </div>
+                    <div class="theme-bg-input border theme-border p-4 rounded-lg space-y-2">
+                        <h5 class="text-xs font-mono theme-text-muted flex items-center gap-2">
+                            <i class="fa-solid fa-circle-check text-emerald-500"></i> Implemented Solution
+                        </h5>
+                        <p id="modal-project-solution" class="text-xs theme-text-main leading-relaxed editable-field" contenteditable="true">Constructed a custom engine driving a React canvas visualizer supporting high throughput stream ingestion.</p>
+                    </div>
+                </div>
+
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <h4 id="modal-project-stack-heading" class="text-xs font-mono theme-text-dim uppercase editable-field" contenteditable="true">ARCHITECTURE &amp; TECH STACK</h4>
+                        <button id="modal-add-tech-btn" onclick="addProjectTechTag()" class="admin-only text-[10px] font-mono border border-dashed theme-border px-2 py-1 rounded theme-text-main hover:border-neutral-500 flex items-center gap-1">
+                            <i class="fa-solid fa-plus"></i> Add Tech Tag
+                        </button>
+                    </div>
+                    <div id="modal-project-stack" class="flex flex-wrap gap-2">
+                <div class="relative group flex items-center">
+                    <span class="text-xs font-mono theme-badge px-3 py-1 rounded-md border theme-border editable-tech-tag" onblur="updateTechTag(0, this.textContent)" contenteditable="true">React</span>
+                    
+                        <button onclick="deleteTechTag(0)" class="ml-1.5 text-red-400 text-xs hover:text-red-500 transition-colors p-0.5">
+                            <i class="fa-solid fa-circle-xmark"></i>
+                        </button>
+                    
+                </div>
+            
+                <div class="relative group flex items-center">
+                    <span class="text-xs font-mono theme-badge px-3 py-1 rounded-md border theme-border editable-tech-tag" onblur="updateTechTag(1, this.textContent)" contenteditable="true">TypeScript</span>
+                    
+                        <button onclick="deleteTechTag(1)" class="ml-1.5 text-red-400 text-xs hover:text-red-500 transition-colors p-0.5">
+                            <i class="fa-solid fa-circle-xmark"></i>
+                        </button>
+                    
+                </div>
+            
+                <div class="relative group flex items-center">
+                    <span class="text-xs font-mono theme-badge px-3 py-1 rounded-md border theme-border editable-tech-tag" onblur="updateTechTag(2, this.textContent)" contenteditable="true">Node.js</span>
+                    
+                        <button onclick="deleteTechTag(2)" class="ml-1.5 text-red-400 text-xs hover:text-red-500 transition-colors p-0.5">
+                            <i class="fa-solid fa-circle-xmark"></i>
+                        </button>
+                    
+                </div>
+            
+                <div class="relative group flex items-center">
+                    <span class="text-xs font-mono theme-badge px-3 py-1 rounded-md border theme-border editable-tech-tag" onblur="updateTechTag(3, this.textContent)" contenteditable="true">SDFSDFSD,EDS</span>
+                    
+                        <button onclick="deleteTechTag(3)" class="ml-1.5 text-red-400 text-xs hover:text-red-500 transition-colors p-0.5">
+                            <i class="fa-solid fa-circle-xmark"></i>
+                        </button>
+                    
+                </div>
+            
+                <div class="relative group flex items-center">
+                    <span class="text-xs font-mono theme-badge px-3 py-1 rounded-md border theme-border editable-tech-tag" onblur="updateTechTag(4, this.textContent)" contenteditable="true">SDGSDGSD</span>
+                    
+                        <button onclick="deleteTechTag(4)" class="ml-1.5 text-red-400 text-xs hover:text-red-500 transition-colors p-0.5">
+                            <i class="fa-solid fa-circle-xmark"></i>
+                        </button>
+                    
+                </div>
+            </div>
+                </div>
+
+                <div class="space-y-3 pt-4 border-t theme-border">
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                        <h4 class="text-xs font-mono theme-text-dim uppercase">Project Screenshots &amp; Visual Stack</h4>
+                        <div class="admin-only flex items-center space-x-2">
+                            <button onclick="addProjectGalleryImageUrl()" class="text-[10px] font-mono border border-dashed theme-border px-2 py-1 rounded theme-text-main hover:border-neutral-500 flex items-center gap-1">
+                                <i class="fa-solid fa-link"></i> Add URL
+                            </button>
+                            <label class="text-[10px] font-mono border border-dashed theme-border px-2 py-1 rounded theme-text-main hover:border-neutral-500 flex items-center gap-1 cursor-pointer">
+                                <i class="fa-solid fa-upload"></i> Upload Image
+                                <input type="file" accept="image/*" class="hidden" onchange="uploadProjectGalleryImage(event)">
+                            </label>
+                        </div>
+                    </div>
+                    <div id="modal-project-gallery" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="relative rounded-lg overflow-hidden border theme-border aspect-video group">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&amp;fit=crop&amp;q=80&amp;w=800" alt="Screenshot 1" class="w-full h-full object-cover theme-img-filter">
+                    
+                        <button onclick="removeGalleryImage(0)" class="absolute top-2 right-2 bg-black/80 text-white rounded-full w-7 h-7 flex items-center justify-center text-xs hover:bg-red-600 transition-colors shadow-md">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    
+                </div>
+            
+                <div class="relative rounded-lg overflow-hidden border theme-border aspect-video group">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&amp;fit=crop&amp;q=80&amp;w=800" alt="Screenshot 2" class="w-full h-full object-cover theme-img-filter">
+                    
+                        <button onclick="removeGalleryImage(1)" class="absolute top-2 right-2 bg-black/80 text-white rounded-full w-7 h-7 flex items-center justify-center text-xs hover:bg-red-600 transition-colors shadow-md">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    
+                </div>
+            
+                <div class="relative rounded-lg overflow-hidden border theme-border aspect-video group">
+                    <img src="data:image/png;base64,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" alt="Screenshot 3" class="w-full h-full object-cover theme-img-filter">
+                    
+                        <button onclick="removeGalleryImage(2)" class="absolute top-2 right-2 bg-black/80 text-white rounded-full w-7 h-7 flex items-center justify-center text-xs hover:bg-red-600 transition-colors shadow-md">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    
+                </div>
+            </div>
+                </div>
+
+                <div id="modal-edit-notice" class="admin-only text-xs font-mono text-amber-500 pt-2 border-t theme-border">
+                    <i class="fa-solid fa-pen"></i> Click text fields directly inside modal to edit content live.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN SCRIPT -->
+    <script>
+        const DEFAULT_DATA = {
+            brandName: "ALEX.DEV",
+            heroPhoto: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80",
+            heroStatus: "Available for Select Projects",
+            heroTitle: "Architecting Clean & Scalable Software Solutions",
+            heroBio: "Full-Stack Engineer specialized in high-performance web systems, reactive user interfaces, and minimalist software design principles.",
+            contactIntro: "Interested in collaboration, contract roles, or technical inquiries? Send a message directly using the terminal layout.",
+            contactEmail: "alex.dev@domain.com",
+            contactLocation: "San Francisco, CA / Remote",
+            contactGithub: "github.com/alex-dev",
+            footerName: "Alex Dev",
+            expertise: [
+                { id: 1, category: "Frontend Engineering", skills: "React, Next.js, TypeScript, Tailwind CSS, Web Performance" },
+                { id: 2, category: "Backend & Cloud", skills: "Node.js, Python, PostgreSQL, REST APIs, GraphQL, Docker, AWS" },
+                { id: 3, category: "System Architecture", skills: "Clean Code, CI/CD Pipelines, Test Automation, Security Audit" }
+            ],
+            experience: [
+                { id: 1, type: "work", title: "Senior Full-Stack Engineer", org: "Apex Technologies Inc.", period: "2023 - Present", desc: "Lead backend infrastructure & frontend architectural redesign resulting in 40% faster latency." },
+                { id: 2, type: "work", title: "Software Engineer", org: "Nexus Cloud Systems", period: "2021 - 2023", desc: "Built scalable data pipelines and responsive dashboard interfaces." },
+                { id: 3, type: "edu", title: "B.S. in Computer Science", org: "University of Tech & Design", period: "2017 - 2021", desc: "Graduated with Honors. Focused on Distributed Systems and HCI." },
+                { id: 4, type: "edu", title: "AWS Certified Solutions Architect", org: "Amazon Web Services", period: "2022", desc: "Enterprise cloud deployment best practices credential." }
+            ],
+            projects: [
+                {
+                    id: 1,
+                    title: "Synthetix Analytics Platform",
+                    category: "SaaS / Full Stack",
+                    summary: "Real-time stream telemetry visualization dashboard for microservice telemetry and network monitoring.",
+                    desc: "Synthetix provides real-time distributed application performance metrics. It monitors WebSocket connection density, query performance, and CPU spikes in multi-tenant cloud deployments.",
+                    problem: "Enterprise operations lacked real-time microsecond visibility into high-frequency microservice transactions.",
+                    solution: "Constructed a custom engine driving a React canvas visualizer supporting high throughput stream ingestion.",
+                    stackHeading: "ARCHITECTURE & TECH STACK",
+                    stack: ["React", "TypeScript", "Node.js", "WebSockets", "Tailwind"],
+                    images: [
+                        "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800",
+                        "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800"
+                    ]
+                },
+                {
+                    id: 2,
+                    title: "Krypton Minimalist CMS",
+                    category: "Developer Tooling",
+                    summary: "An ultra-lightweight content editing framework stored client-side or static JSON.",
+                    desc: "Designed to remove server friction, Krypton turns any web page into a live editable page with immediate persistent sync capabilities.",
+                    problem: "Traditional CMS setups require heavy server setups for basic personal sites.",
+                    solution: "Created an inline contentEditable engine with encrypted local persistence layer.",
+                    stackHeading: "ARCHITECTURE & TECH STACK",
+                    stack: ["JavaScript", "HTML5", "CSS3", "LocalStorage"],
+                    images: [
+                        "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&q=80&w=800"
+                    ]
+                }
+            ],
+            customSections: []
+        };
+
+        let appData = JSON.parse(localStorage.getItem('portfolio_minimal_data')) || DEFAULT_DATA;
+        let currentTheme = localStorage.getItem('portfolio_theme') || 'dark';
+        let isAdmin = localStorage.getItem('portfolio_is_admin') === 'true';
+        let currentModalProjectId = null;
+        const ADMIN_PIN = "1234";
+
+        window.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('footer-year').textContent = new Date().getFullYear();
+            if (appData.heroPhoto) {
+                document.getElementById('hero-photo').src = appData.heroPhoto;
+            }
+            initTheme();
+            renderAll();
+        });
+
+        window.initTheme = function() {
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            updateThemeIcon();
+        };
+
+        window.toggleTheme = function() {
+            currentTheme = (currentTheme === 'dark') ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            localStorage.setItem('portfolio_theme', currentTheme);
+            updateThemeIcon();
+        };
+
+        window.updateThemeIcon = function() {
+            const icon = document.getElementById('theme-icon');
+            if (icon) {
+                icon.className = currentTheme === 'dark' ? "fa-solid fa-sun theme-text-main text-sm" : "fa-solid fa-moon theme-text-main text-sm";
+            }
+        };
+
+        window.promptChangePhotoUrl = function() {
+            if (!isAdmin) return;
+            const currentUrl = document.getElementById('hero-photo').src;
+            const newUrl = prompt("Enter Image URL for Hero Profile Photo:", currentUrl);
+            if (newUrl && newUrl.trim() !== "") {
+                appData.heroPhoto = newUrl.trim();
+                document.getElementById('hero-photo').src = appData.heroPhoto;
+                saveData();
+            }
+        };
+
+        window.uploadHeroPhoto = function(event) {
+            if (!isAdmin) return;
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    appData.heroPhoto = e.target.result;
+                    document.getElementById('hero-photo').src = appData.heroPhoto;
+                    saveData();
+                };
+                reader.readAsDataURL(file);
+            }
+        };
+
+        window.saveData = function() {
+            localStorage.setItem('portfolio_minimal_data', JSON.stringify(appData));
+            showSaveStatus();
+        };
+
+        window.showSaveStatus = function() {
+            const indicator = document.getElementById('save-status-indicator');
+            if (indicator) {
+                indicator.classList.remove('hidden');
+                indicator.classList.add('flex');
+                setTimeout(() => {
+                    indicator.classList.add('hidden');
+                    indicator.classList.remove('flex');
+                }, 2000);
+            }
+        };
+
+        window.renderAll = function() {
+            renderEditableText();
+            renderExpertise();
+            renderTimeline();
+            renderProjects();
+            renderCustomSections();
+            applyAdminState();
+        };
+
+        window.renderEditableText = function() {
+            document.querySelectorAll('.editable').forEach(el => {
+                const key = el.dataset.key;
+                if (key && appData[key] !== undefined) {
+                    el.textContent = appData[key];
+                }
+                el.onblur = (e) => {
+                    if (isAdmin && key) {
+                        appData[key] = e.target.textContent.trim();
+                        saveData();
+                    }
+                };
+            });
+        };
+
+        window.renderExpertise = function() {
+            const container = document.getElementById('expertise-container');
+            container.innerHTML = appData.expertise.map(item => `
+                <div class="theme-bg-card border theme-border rounded-xl p-6 space-y-4 relative group">
+                    ${isAdmin ? `
+                        <button onclick="deleteExpertise(${item.id})" class="absolute top-4 right-4 theme-text-dim hover:text-red-400 text-xs transition-colors">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    ` : ''}
+                    <h3 class="text-base font-bold font-mono theme-text-main editable-field" 
+                        onblur="updateExpertise(${item.id}, 'category', this.textContent)">${item.category}</h3>
+                    <p class="text-xs theme-text-muted font-mono leading-relaxed editable-field"
+                       onblur="updateExpertise(${item.id}, 'skills', this.textContent)">${item.skills}</p>
+                </div>
+            `).join('');
+            if (isAdmin) {
+                container.querySelectorAll('.editable-field').forEach(el => el.contentEditable = "true");
+            }
+        };
+
+        window.updateExpertise = function(id, key, value) {
+            if (!isAdmin) return;
+            const item = appData.expertise.find(e => e.id === id);
+            if (item) {
+                item[key] = value.trim();
+                saveData();
+            }
+        };
+
+        window.addExpertiseCategory = function() {
+            if (!isAdmin) return;
+            appData.expertise.push({
+                id: Date.now(),
+                category: "New Skill Category",
+                skills: "Skill A, Skill B, Skill C"
+            });
+            saveData();
+            renderExpertise();
+        };
+
+        window.deleteExpertise = function(id) {
+            if (!isAdmin) return;
+            appData.expertise = appData.expertise.filter(e => e.id !== id);
+            saveData();
+            renderExpertise();
+        };
+
+        window.renderTimeline = function() {
+            const workContainer = document.getElementById('work-timeline');
+            const eduContainer = document.getElementById('education-timeline');
+
+            const createTimelineHTML = (items) => items.map(item => `
+                <div class="space-y-2 relative group">
+                    <div class="absolute -left-[31px] top-1.5 w-2.5 h-2.5 rounded-full theme-bg-main border theme-border"></div>
+                    ${isAdmin ? `
+                        <button onclick="deleteExperience(${item.id})" class="absolute right-0 top-0 theme-text-dim hover:text-red-400 text-xs transition-colors">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    ` : ''}
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                        <h4 class="text-base font-bold theme-text-main editable-field"
+                            onblur="updateExperience(${item.id}, 'title', this.textContent)">${item.title}</h4>
+                        <span class="text-xs font-mono theme-text-dim editable-field"
+                              onblur="updateExperience(${item.id}, 'period', this.textContent)">${item.period}</span>
+                    </div>
+                    <div class="text-xs font-mono theme-text-muted editable-field"
+                         onblur="updateExperience(${item.id}, 'org', this.textContent)">${item.org}</div>
+                    <p class="text-xs theme-text-muted font-light leading-relaxed pt-1 editable-field"
+                       onblur="updateExperience(${item.id}, 'desc', this.textContent)">${item.desc}</p>
+                </div>
+            `).join('');
+
+            workContainer.innerHTML = createTimelineHTML(appData.experience.filter(e => e.type === 'work'));
+            eduContainer.innerHTML = createTimelineHTML(appData.experience.filter(e => e.type === 'edu'));
+
+            if (isAdmin) {
+                workContainer.querySelectorAll('.editable-field').forEach(el => el.contentEditable = "true");
+                eduContainer.querySelectorAll('.editable-field').forEach(el => el.contentEditable = "true");
+            }
+        };
+
+        window.updateExperience = function(id, key, value) {
+            if (!isAdmin) return;
+            const item = appData.experience.find(e => e.id === id);
+            if (item) {
+                item[key] = value.trim();
+                saveData();
+            }
+        };
+
+        window.addExperienceEntry = function() {
+            if (!isAdmin) return;
+            const isWork = confirm("Click OK for Work Experience, or CANCEL for Education/Credential.");
+            appData.experience.push({
+                id: Date.now(),
+                type: isWork ? 'work' : 'edu',
+                title: isWork ? "New Job Title" : "New Certification / Degree",
+                org: "Company or Institution",
+                period: "2024 - Present",
+                desc: "Key duties, achievements, or honors."
+            });
+            saveData();
+            renderTimeline();
+        };
+
+        window.deleteExperience = function(id) {
+            if (!isAdmin) return;
+            appData.experience = appData.experience.filter(e => e.id !== id);
+            saveData();
+            renderTimeline();
+        };
+
+        window.renderProjects = function() {
+            const grid = document.getElementById('projects-grid');
+            grid.innerHTML = appData.projects.map(proj => `
+                <div class="theme-bg-card border theme-border rounded-xl p-6 flex flex-col justify-between space-y-4 hover:border-neutral-500 transition-all cursor-pointer group relative"
+                     onclick="openProjectModal(${proj.id})">
+                    ${isAdmin ? `
+                        <button onclick="event.stopPropagation(); deleteProject(${proj.id})" class="absolute top-4 right-4 theme-text-dim hover:text-red-400 text-xs transition-colors z-10">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    ` : ''}
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-[10px] font-mono theme-badge uppercase tracking-widest border theme-border px-2 py-0.5 rounded editable-field"
+                                  onclick="event.stopPropagation()" onblur="updateProjectField(${proj.id}, 'category', this.textContent)">${proj.category}</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-xs theme-text-dim group-hover:theme-text-main transition-colors"></i>
+                        </div>
+                        <h3 class="text-lg font-bold theme-text-main editable-field"
+                            onclick="event.stopPropagation()" onblur="updateProjectField(${proj.id}, 'title', this.textContent)">${proj.title}</h3>
+                        <p class="text-xs theme-text-muted font-light leading-relaxed line-clamp-3 editable-field"
+                           onclick="event.stopPropagation()" onblur="updateProjectField(${proj.id}, 'summary', this.textContent)">${proj.summary}</p>
+                    </div>
+
+                    <div class="pt-4 border-t theme-border flex flex-wrap gap-1.5">
+                        ${(proj.stack || []).map(s => `<span class="text-[10px] font-mono theme-badge px-2 py-0.5 rounded border theme-border">${s}</span>`).join('')}
+                    </div>
+                </div>
+            `).join('');
+
+            if (isAdmin) {
+                grid.querySelectorAll('.editable-field').forEach(el => el.contentEditable = "true");
+            }
+        };
+
+        window.updateProjectField = function(id, key, value) {
+            if (!isAdmin) return;
+            const proj = appData.projects.find(p => p.id === id);
+            if (proj) {
+                proj[key] = value.trim();
+                saveData();
+            }
+        };
+
+        window.addProjectCard = function() {
+            if (!isAdmin) return;
+            appData.projects.push({
+                id: Date.now(),
+                title: "New Project Showcase",
+                category: "Category",
+                summary: "Brief project summary explaining purpose and results.",
+                desc: "Detailed breakdown of system architecture.",
+                problem: "Problem statement faced.",
+                solution: "Implemented technical solution.",
+                stackHeading: "ARCHITECTURE & TECH STACK",
+                stack: ["React", "TypeScript"],
+                images: ["https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800"]
+            });
+            saveData();
+            renderProjects();
+        };
+
+        window.deleteProject = function(id) {
+            if (!isAdmin) return;
+            appData.projects = appData.projects.filter(p => p.id !== id);
+            saveData();
+            renderProjects();
+        };
+
+        window.renderCustomSections = function() {
+            const wrapper = document.getElementById('custom-sections-wrapper');
+            wrapper.innerHTML = appData.customSections.map(sec => `
+                <section class="space-y-6 relative border-t theme-border pt-8">
+                    ${isAdmin ? `
+                        <button onclick="deleteCustomSection(${sec.id})" class="absolute top-8 right-0 theme-text-dim hover:text-red-400 text-xs font-mono flex items-center gap-1">
+                            <i class="fa-solid fa-trash"></i> Delete Section
+                        </button>
+                    ` : ''}
+                    <div>
+                        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight theme-text-main editable-field"
+                            onblur="updateCustomSection(${sec.id}, 'title', this.textContent)">${sec.title}</h2>
+                        <p class="text-xs font-mono theme-text-dim mt-1 uppercase editable-field"
+                           onblur="updateCustomSection(${sec.id}, 'subtitle', this.textContent)">// ${sec.subtitle}</p>
+                    </div>
+                    <div class="theme-bg-card border theme-border rounded-xl p-6 text-sm theme-text-muted leading-relaxed editable-field"
+                         onblur="updateCustomSection(${sec.id}, 'content', this.textContent)">
+                        ${sec.content}
+                    </div>
+                </section>
+            `).join('');
+
+            if (isAdmin) {
+                wrapper.querySelectorAll('.editable-field').forEach(el => el.contentEditable = "true");
+            }
+        };
+
+        window.addCustomSection = function() {
+            if (!isAdmin) return;
+            appData.customSections.push({
+                id: Date.now(),
+                title: "Custom Section Header",
+                subtitle: "CUSTOM SUBTITLE / CATEGORY",
+                content: "Add detailed text content or information here."
+            });
+            saveData();
+            renderCustomSections();
+        };
+
+        window.updateCustomSection = function(id, key, value) {
+            if (!isAdmin) return;
+            const sec = appData.customSections.find(s => s.id === id);
+            if (sec) {
+                sec[key] = value.trim();
+                saveData();
+            }
+        };
+
+        window.deleteCustomSection = function(id) {
+            if (!isAdmin) return;
+            appData.customSections = appData.customSections.filter(s => s.id !== id);
+            saveData();
+            renderCustomSections();
+        };
+
+        // Project Modal Handling
+        window.openProjectModal = function(id) {
+            currentModalProjectId = id;
+            const proj = appData.projects.find(p => p.id === id);
+            if (!proj) return;
+
+            if (!proj.stackHeading) proj.stackHeading = "ARCHITECTURE & TECH STACK";
+            if (!proj.images) proj.images = [];
+            if (!proj.stack) proj.stack = [];
+
+            document.getElementById('modal-project-tags').textContent = proj.category;
+            document.getElementById('modal-project-title').textContent = proj.title;
+            document.getElementById('modal-project-desc').textContent = proj.desc;
+            document.getElementById('modal-project-problem').textContent = proj.problem;
+            document.getElementById('modal-project-solution').textContent = proj.solution;
+            document.getElementById('modal-project-stack-heading').textContent = proj.stackHeading;
+
+            renderModalTechStack(proj);
+            renderModalGallery(proj);
+            setupModalEditing(proj);
+
+            document.getElementById('project-modal').classList.remove('hidden');
+        };
+
+        window.renderModalTechStack = function(proj) {
+            const container = document.getElementById('modal-project-stack');
+            if (!proj.stack || proj.stack.length === 0) {
+                container.innerHTML = `<p class="text-xs theme-text-dim font-mono">No tech tags defined.</p>`;
+                return;
+            }
+            container.innerHTML = proj.stack.map((s, index) => `
+                <div class="relative group flex items-center">
+                    <span class="text-xs font-mono theme-badge px-3 py-1 rounded-md border theme-border editable-tech-tag"
+                          onblur="updateTechTag(${index}, this.textContent)">${s}</span>
+                    ${isAdmin ? `
+                        <button onclick="deleteTechTag(${index})" class="ml-1.5 text-red-400 text-xs hover:text-red-500 transition-colors p-0.5">
+                            <i class="fa-solid fa-circle-xmark"></i>
+                        </button>
+                    ` : ''}
+                </div>
+            `).join('');
+
+            if (isAdmin) {
+                container.querySelectorAll('.editable-tech-tag').forEach(el => el.contentEditable = "true");
+            }
+        };
+
+        window.updateTechTag = function(index, value) {
+            if (!isAdmin || !currentModalProjectId) return;
+            const proj = appData.projects.find(p => p.id === currentModalProjectId);
+            if (proj && proj.stack) {
+                proj.stack[index] = value.trim();
+                saveData();
+                renderProjects();
+            }
+        };
+
+        window.deleteTechTag = function(index) {
+            if (!isAdmin || !currentModalProjectId) return;
+            const proj = appData.projects.find(p => p.id === currentModalProjectId);
+            if (proj && proj.stack) {
+                proj.stack.splice(index, 1);
+                saveData();
+                renderModalTechStack(proj);
+                renderProjects();
+            }
+        };
+
+        window.addProjectTechTag = function() {
+            if (!isAdmin || !currentModalProjectId) return;
+            const tag = prompt("Enter Tech Stack Tag:");
+            if (tag && tag.trim() !== "") {
+                const proj = appData.projects.find(p => p.id === currentModalProjectId);
+                if (proj) {
+                    proj.stack.push(tag.trim());
+                    saveData();
+                    renderModalTechStack(proj);
+                    renderProjects();
+                }
+            }
+        };
+
+        window.renderModalGallery = function(proj) {
+            const container = document.getElementById('modal-project-gallery');
+            if (!proj.images || proj.images.length === 0) {
+                container.innerHTML = `<p class="text-xs theme-text-dim font-mono col-span-2">No screenshots uploaded.</p>`;
+                return;
+            }
+            container.innerHTML = proj.images.map((imgUrl, idx) => `
+                <div class="relative rounded-lg overflow-hidden border theme-border aspect-video group">
+                    <img src="${imgUrl}" alt="Screenshot ${idx + 1}" class="w-full h-full object-cover theme-img-filter">
+                    ${isAdmin ? `
+                        <button onclick="removeGalleryImage(${idx})" class="absolute top-2 right-2 bg-black/80 text-white rounded-full w-7 h-7 flex items-center justify-center text-xs hover:bg-red-600 transition-colors shadow-md">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    ` : ''}
+                </div>
+            `).join('');
+        };
+
+        window.addProjectGalleryImageUrl = function() {
+            if (!isAdmin || !currentModalProjectId) return;
+            const url = prompt("Enter Direct Image URL:");
+            if (url && url.trim() !== "") {
+                const proj = appData.projects.find(p => p.id === currentModalProjectId);
+                if (proj) {
+                    proj.images.push(url.trim());
+                    saveData();
+                    renderModalGallery(proj);
+                }
+            }
+        };
+
+        window.uploadProjectGalleryImage = function(event) {
+            if (!isAdmin || !currentModalProjectId) return;
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const proj = appData.projects.find(p => p.id === currentModalProjectId);
+                    if (proj) {
+                        proj.images.push(e.target.result);
+                        saveData();
+                        renderModalGallery(proj);
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
+        };
+
+        window.removeGalleryImage = function(idx) {
+            if (!isAdmin || !currentModalProjectId) return;
+            const proj = appData.projects.find(p => p.id === currentModalProjectId);
+            if (proj && proj.images) {
+                proj.images.splice(idx, 1);
+                saveData();
+                renderModalGallery(proj);
+            }
+        };
+
+        window.setupModalEditing = function(proj) {
+            const fields = [
+                { id: 'modal-project-tags', key: 'category' },
+                { id: 'modal-project-title', key: 'title' },
+                { id: 'modal-project-desc', key: 'desc' },
+                { id: 'modal-project-problem', key: 'problem' },
+                { id: 'modal-project-solution', key: 'solution' },
+                { id: 'modal-project-stack-heading', key: 'stackHeading' }
+            ];
+
+            fields.forEach(f => {
+                const el = document.getElementById(f.id);
+                if (!el) return;
+                if (isAdmin) {
+                    el.contentEditable = "true";
+                    el.classList.add('editable-field');
+                    el.onblur = () => {
+                        proj[f.key] = el.textContent.trim();
+                        saveData();
+                        renderProjects();
+                    };
+                } else {
+                    el.contentEditable = "false";
+                    el.classList.remove('editable-field');
+                    el.onblur = null;
+                }
+            });
+        };
+
+        window.closeProjectModal = function() {
+            document.getElementById('project-modal').classList.add('hidden');
+            currentModalProjectId = null;
+        };
+
+        // Admin Session Handling
+        window.toggleAdminModal = function() {
+            if (isAdmin) {
+                isAdmin = false;
+                localStorage.setItem('portfolio_is_admin', 'false');
+                applyAdminState();
+            } else {
+                document.getElementById('login-modal').classList.remove('hidden');
+                document.getElementById('admin-pin-input').value = '';
+                document.getElementById('pin-error').classList.add('hidden');
+            }
+        };
+
+        window.closeAdminModal = function() {
+            document.getElementById('login-modal').classList.add('hidden');
+        };
+
+        window.handleAdminAuth = function(e) {
+            if (e && e.preventDefault) e.preventDefault();
+            const pin = document.getElementById('admin-pin-input').value;
+            if (pin === ADMIN_PIN) {
+                isAdmin = true;
+                localStorage.setItem('portfolio_is_admin', 'true');
+                closeAdminModal();
+                applyAdminState();
+            } else {
+                document.getElementById('pin-error').classList.remove('hidden');
+            }
+        };
+
+        window.applyAdminState = function() {
+            const btnText = document.getElementById('admin-btn-text');
+            const btnIcon = document.getElementById('admin-icon');
+            const adminButtons = document.querySelectorAll('.admin-only');
+
+            if (isAdmin) {
+                document.body.classList.add('admin-mode');
+                btnText.textContent = "Owner Logged In (Exit)";
+                btnIcon.className = "fa-solid fa-lock-open text-emerald-400";
+                adminButtons.forEach(btn => btn.classList.remove('hidden'));
+            } else {
+                document.body.classList.remove('admin-mode');
+                btnText.textContent = "Owner Login";
+                btnIcon.className = "fa-solid fa-lock text-neutral-400";
+                adminButtons.forEach(btn => btn.classList.add('hidden'));
+            }
+
+            renderEditableText();
+            renderExpertise();
+            renderTimeline();
+            renderProjects();
+            renderCustomSections();
+
+            if (currentModalProjectId) {
+                const proj = appData.projects.find(p => p.id === currentModalProjectId);
+                if (proj) {
+                    setupModalEditing(proj);
+                    renderModalTechStack(proj);
+                    renderModalGallery(proj);
+                }
+            }
+        };
+
+        window.handleSendDM = function(e) {
+            if (e && e.preventDefault) e.preventDefault();
+            const overlay = document.getElementById('dm-success');
+            overlay.classList.remove('hidden');
+            overlay.classList.add('flex');
+        };
+
+        window.resetDMForm = function() {
+            document.getElementById('dm-form').reset();
+            const overlay = document.getElementById('dm-success');
+            overlay.classList.add('hidden');
+            overlay.classList.remove('flex');
+        };
+    </script>
+
+</body></html>
